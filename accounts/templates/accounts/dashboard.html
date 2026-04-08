@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | PoolDrawResult{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <h2 class="section-title mb-4">My Dashboard</h2>
+    <div class="p-4 rounded" style="background:var(--surface2); border:1px solid rgba(255,255,255,0.07);">
+
+      <p class="text-muted mb-1">Logged in as</p>
+      <h5 style="font-family:var(--font-head); color:#e8eaf0;">{{ request.user.username }}</h5>
+      <p class="text-muted" style="font-size:13px;">{{ request.user.email }}</p>
+
+      <hr style="border-color:rgba(255,255,255,0.07);">
+
+      {% if request.user.profile.vip_is_active %}
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <span class="badge" style="background:#f5a623; color:#000; font-size:13px; padding:6px 14px;">
+            <i class="bi bi-star-fill me-1"></i> VIP Active
+          </span>
+          {% if request.user.profile.vip_expires_on %}
+            <span class="text-muted" style="font-size:12px;">
+              Expires: {{ request.user.profile.vip_expires_on|date:"d M Y" }}
+            </span>
+          {% endif %}
+        </div>
+        <a href="/vip/" class="btn btn-sm" style="background:#f5a623; color:#000; font-family:var(--font-head);">
+          <i class="bi bi-star-fill me-1"></i> Go to VIP Page
+        </a>
+      {% else %}
+        <div class="mb-3">
+          <span class="badge bg-secondary" style="font-size:13px; padding:6px 14px;">Free Account</span>
+        </div>
+        <p class="text-muted" style="font-size:13px;">
+          Want access to VIP predictions and banker tips? Chat us to make payment and get activated.
+        </p>
+        <a href="/contact/" class="btn btn-sm" style="background:var(--green); color:#000; font-family:var(--font-head);">
+          <i class="bi bi-chat-dots-fill me-1"></i> Contact Us to Upgrade
+        </a>
+      {% endif %}
+
+      <hr style="border-color:rgba(255,255,255,0.07);">
+      <a href="/logout/" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-box-arrow-right me-1"></i> Logout
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "pool/base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}{{ page.seo_title|default:page.title }} | PoolDrawResult{% endblock %}
+{% block meta_description %}{{ page.search_description|default:page.intro }}{% endblock %}
+{% block og_title %}{{ page.title }} | PoolDrawResult{% endblock %}
+{% block og_description %}{{ page.search_description|default:page.intro }}{% endblock %}
+
+{% block content %}
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb" style="font-size:13px;">
+          <li class="breadcrumb-item"><a href="/" style="color:var(--green);">Home</a></li>
+          <li class="breadcrumb-item"><a href="/blog/" style="color:var(--green);">Blog</a></li>
+          <li class="breadcrumb-item active text-muted">{{ page.title }}</li>
+        </ol>
+      </nav>
+
+      <!-- Title -->
+      <h1 style="font-family:var(--font-head); font-size:32px; font-weight:700; color:#e8eaf0; line-height:1.3; margin-bottom:16px;">
+        {{ page.title }}
+      </h1>
+
+      <!-- Meta row -->
+      <div class="d-flex flex-wrap align-items-center gap-3 mb-4" style="font-size:13px; color:var(--muted);">
+        <span><i class="bi bi-calendar3 me-1"></i>{{ page.date|date:"d F Y" }}</span>
+        {% for category in page.categories.all %}
+          <span class="badge" style="background:var(--green); color:#000;">{{ category.name }}</span>
+        {% endfor %}
+        {% for tag in page.tags.all %}
+          <span style="border:1px solid rgba(255,255,255,0.1); padding:2px 8px; border-radius:4px;">#{{ tag }}</span>
+        {% endfor %}
+      </div>
+
+      <!-- Intro -->
+      {% if page.intro %}
+        <p style="font-size:16px; color:var(--muted); line-height:1.8; border-left:3px solid var(--green); padding-left:16px; margin-bottom:28px;">
+          {{ page.intro }}
+        </p>
+      {% endif %}
+
+      <!-- StreamField Content -->
+      <div style="background:#fff; color:#111; border-radius:8px; padding:32px;">
+        {% for block in page.content %}
+          {% if block.block_type == 'heading' %}
+            <h3 style="font-family:var(--font-head); font-size:22px; font-weight:700; margin-top:28px; margin-bottom:12px; color:#111;">
+              {{ block.value }}
+            </h3>
+          {% elif block.block_type == 'paragraph' %}
+            <div style="font-size:15px; line-height:1.85; margin-bottom:16px;">
+              {% include_block block %}
+            </div>
+          {% elif block.block_type == 'image' %}
+            <figure class="my-4 text-center">
+              <img src="{{ block.value.file.url }}" class="img-fluid rounded" alt="{{ block.value.title }}" style="max-width:100%;">
+              {% if block.value.title %}
+                <figcaption class="mt-2" style="font-size:12px; color:#888;">{{ block.value.title }}</figcaption>
+              {% endif %}
+            </figure>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <!-- Back to Blog -->
+      <div class="mt-4">
+        <a href="/blog/" class="btn btn-outline-secondary btn-sm">
+          <i class="bi bi-arrow-left me-1"></i> Back to Blog
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}

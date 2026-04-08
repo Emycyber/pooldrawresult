@@ -1,0 +1,33 @@
+{% extends "pool/base.html" %}
+{% load static %}
+
+{% block title %}Our Partners | PoolDrawResult{% endblock %}
+{% block meta_description %}Meet the trusted partners of PoolDrawResult. We work with leading football pools platforms and tipster sites worldwide to bring you the best pool draw information.{% endblock %}
+{% block og_title %}Our Partners | PoolDrawResult{% endblock %}
+{% block og_description %}Meet the trusted partners of PoolDrawResult. We work with leading football pools platforms and tipster sites worldwide to bring you the best pool draw information.{% endblock %}
+{% block og_image %}{% static 'images/og-default.jpg' %}{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb" style="font-size:13px;">
+          <li class="breadcrumb-item"><a href="/" style="color:var(--green);">Home</a></li>
+          <li class="breadcrumb-item active text-muted">Our Partners</li>
+        </ol>
+      </nav>
+
+      <h1 class="section-title mb-4">Our Partners</h1>
+      <div class="p-4 rounded" style="background:#fff; color:#111;">
+        <p>We work with trusted partners across the football pools industry worldwide.</p>
+        <div class="d-flex flex-wrap gap-3 mt-3">
+          <a href="#" class="partner-tag">WinnersTip</a>
+          <a href="#" class="partner-tag">TafaTips</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

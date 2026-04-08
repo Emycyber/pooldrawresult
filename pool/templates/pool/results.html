@@ -1,0 +1,132 @@
+{% extends "pool/base.html" %}
+
+{% block title %}Week {{ week.number }} Pool Results ({{ week.season }}) | PoolDrawResult{% endblock %}
+{% block meta_description %}Week {{ week.number }} pool results for the {{ week.season }} season. {{ draw_count }} draws recorded.{% endblock %}
+
+{% block content %}
+
+  {% if no_data %}
+    <div class="alert alert-warning">No results available yet. Check back soon.</div>
+  {% else %}
+
+    <!-- Header & Week Selector -->
+    <div class="row align-items-center mb-4">
+      <div class="col-md-6">
+        <h2 class="section-title mb-0">Week {{ week.number }} Results</h2>
+        <p class="text-muted mt-1" style="font-size:13px;">
+          <i class="bi bi-calendar3 me-1"></i>{{ week.date|date:"l, d F Y" }} &mdash; {{ week.season }}
+        </p>
+      </div>
+      <div class="col-md-4 mt-3 mt-md-0">
+        <select class="form-select" onchange="location = this.value">
+          {% for w in weeks %}
+            <option value="/results/week/{{ w.number }}/" {% if w.number == week.number %}selected{% endif %}>
+              Week {{ w.number }} | {{ w.season }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <!-- Prev / Next Navigation -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        {% if previous_week %}
+          <a href="/results/week/{{ previous_week.number }}/" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left"></i> Week {{ previous_week.number }}
+          </a>
+        {% endif %}
+      </div>
+      <strong class="fs-6 text-muted">Week {{ week.number }}</strong>
+      <div>
+        {% if next_week %}
+          <a href="/results/week/{{ next_week.number }}/" class="btn btn-outline-secondary btn-sm">
+            Week {{ next_week.number }} <i class="bi bi-arrow-right"></i>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Draw Count & Live Badge -->
+    <div class="d-flex gap-2 mb-3">
+      <span class="badge" style="background:var(--green); color:#000; font-family:var(--font-head); font-size:13px; padding:6px 14px;">
+        <i class="bi bi-check2-circle me-1"></i> Total Draws: {{ draw_count }}
+      </span>
+      {% if has_live_matches %}
+        <span class="badge bg-danger" style="font-size:13px; padding:6px 14px; animation: pulse 1.5s infinite;">
+          <i class="bi bi-circle-fill me-1"></i> Live
+        </span>
+      {% endif %}
+    </div>
+
+    <!-- Results Table -->
+    <div class="table-responsive" data-bs-theme="light">
+      <table class="table table-bordered align-middle pool-table">
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>Home</th>
+            <th class="text-center">Result</th>
+            <th>Away</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for match in matches %}
+            <tr {% if match.is_draw %}class="table-success"{% endif %}>
+              <td>{{ match.match_number }}</td>
+              <td>{{ match.home_team }}</td>
+              <td class="text-center score">
+                {% if match.status == 'result' %}
+                  {{ match.result }}
+                {% elif match.status == 'live' %}
+                  <span class="text-danger fw-bold">{{ match.result }} 🔴</span>
+                {% elif match.status == 'postponed' %}
+                  <span class="text-muted">PPD</span>
+                {% elif match.status == 'void' %}
+                  <span class="text-muted">VOID</span>
+                {% else %}
+                  <span class="text-muted">–</span>
+                {% endif %}
+              </td>
+              <td>{{ match.away_team }}</td>
+              <td>{{ match.date|date:"d M Y" }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="5" class="text-center text-muted py-4">No results available for this week.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="d-flex gap-3 mt-4">
+      {% if previous_week %}
+        <a href="/results/week/{{ previous_week.number }}/" class="btn btn-outline-secondary btn-sm">
+          <i class="bi bi-arrow-left"></i> Previous Week
+        </a>
+      {% endif %}
+      <a href="/archive/" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-archive me-1"></i> View Archive
+      </a>
+      {% if next_week %}
+        <a href="/results/week/{{ next_week.number }}/" class="btn btn-outline-secondary btn-sm">
+          Next Week <i class="bi bi-arrow-right"></i>
+        </a>
+      {% endif %}
+    </div>
+
+  {% endif %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  {% if has_live_matches %}
+    // Auto-refresh every 60 seconds during live matches
+    setTimeout(() => location.reload(), 60000);
+  {% endif %}
+</script>
+{% endblock %}

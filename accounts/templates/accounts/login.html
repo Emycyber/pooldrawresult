@@ -1,0 +1,37 @@
+{% extends "pool/base.html" %}
+
+{% block title %}Login | PoolDrawResult{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="p-4 rounded" style="background:var(--surface2); border:1px solid rgba(255,255,255,0.07);">
+      <h2 class="section-title mb-4">Login</h2>
+
+      {% for message in messages %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label text-muted">Username</label>
+          <input type="text" name="username" class="form-control" required>
+        </div>
+        <div class="mb-4">
+          <label class="form-label text-muted">Password</label>
+          <input type="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-cta w-100">Login</button>
+      </form>
+
+      <p class="text-center text-muted mt-3" style="font-size:13px;">
+        No account? <a href="/register/" style="color:var(--green);">Register here</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

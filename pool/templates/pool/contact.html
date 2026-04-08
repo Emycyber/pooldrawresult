@@ -1,0 +1,31 @@
+{% extends "pool/base.html" %}
+{% load static %}
+
+{% block title %}Contact Us | PoolDrawResult{% endblock %}
+{% block meta_description %}Get in touch with PoolDrawResult. Contact us for enquiries about pool draw fixtures, results, predictions, VIP membership and advertising.{% endblock %}
+{% block og_title %}Contact Us | PoolDrawResult{% endblock %}
+{% block og_description %}Get in touch with PoolDrawResult. Contact us for enquiries about pool draw fixtures, results, predictions, VIP membership and advertising.{% endblock %}
+{% block og_image %}{% static 'images/og-default.jpg' %}{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb" style="font-size:13px;">
+          <li class="breadcrumb-item"><a href="/" style="color:var(--green);">Home</a></li>
+          <li class="breadcrumb-item active text-muted">Contact Us</li>
+        </ol>
+      </nav>
+
+      <h1 class="section-title mb-4">Contact Us</h1>
+      <div class="p-4 rounded" style="background:#fff; color:#111;">
+        <p><i class="bi bi-envelope-fill me-2" style="color:var(--green);"></i> pooldrawresult@gmail.com</p>
+        <p><i class="bi bi-telephone-fill me-2" style="color:var(--green);"></i> +234 800 000 0000</p>
+        <p><i class="bi bi-geo-alt-fill me-2" style="color:var(--green);"></i> Lagos, Nigeria</p>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

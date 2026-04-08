@@ -1,0 +1,30 @@
+{% extends "pool/base.html" %}
+{% load static %}
+
+{% block title %}About Us | PoolDrawResult{% endblock %}
+{% block meta_description %}Learn about PoolDrawResult — World's trusted daily source for verified pool draw fixtures, results and predictions across all major football competitions.{% endblock %}
+{% block og_title %}About Us | PoolDrawResult{% endblock %}
+{% block og_description %}Learn about PoolDrawResult — World's trusted daily source for verified pool draw fixtures, results and predictions across all major football competitions.{% endblock %}
+{% block og_image %}{% static 'images/og-default.jpg' %}{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb" style="font-size:13px;">
+          <li class="breadcrumb-item"><a href="/" style="color:var(--green);">Home</a></li>
+          <li class="breadcrumb-item active text-muted">About Us</li>
+        </ol>
+      </nav>
+
+      <h1 class="section-title mb-4">About Us</h1>
+      <div class="p-4 rounded" style="background:#fff; color:#111;">
+        <p>Welcome to PoolDrawResult — your trusted daily source for verified pool draw fixtures and results across all major football competitions.</p>
+        <p>We are dedicated to providing accurate, timely, and comprehensive pool draw information to help you make informed decisions every week.</p>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "pool/base.html" %}
+
+{% block title %}Week {{ week.number }} Predictions ({{ week.season }}) | PoolDrawResult{% endblock %}
+
+{% block meta_description %}Week {{ week.number }} pool draw predictions for the {{ week.season }} season. Expert home, draw and away tips updated every week.{% endblock %}
+
+{% block og_title %}Week {{ week.number }} Pool Predictions | PoolDrawResult{% endblock %}
+
+{% block og_description %}Week {{ week.number }} pool draw predictions for the {{ week.season }} season. Expert home, draw and away tips updated every week.{% endblock %}
+
+{% block og_image %}{% static 'images/og-default.jpg' %}{% endblock %}
+
+{% block content %}
+
+  {% if no_data %}
+    <div class="alert alert-warning">No prediction data available yet. Check back soon.</div>
+  {% else %}
+
+    <!-- Header & Week Selector -->
+    <div class="row align-items-center mb-4">
+      <div class="col-md-6">
+        <h2 class="section-title mb-0">Week {{ week.number }} Predictions</h2>
+        <p class="text-muted mt-1" style="font-size:13px;">
+          <i class="bi bi-calendar3"></i> {{ week.season }}
+        </p>
+      </div>
+      <div class="col-md-4 mt-3 mt-md-0">
+        <select class="form-select" onchange="location = this.value">
+          {% for w in weeks %}
+            <option value="/predictions/week/{{ w.number }}/" {% if w.number == week.number %}selected{% endif %}>
+              Week {{ w.number }} | {{ w.season }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <!-- Predictions Table -->
+    <div class="table-responsive" data-bs-theme="light">
+      <table class="table table-bordered align-middle pool-table">
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>Home</th>
+            <th class="text-center">Result</th>
+            <th>Away</th>
+            <th>Prediction</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for match in matches %}
+            <tr {% if match.is_draw %}class="table-success"{% endif %}>
+              <td>{{ match.match_number }}</td>
+              <td>{{ match.home_team }}</td>
+              <td class="text-center score">
+                {% if match.status == 'result' %}
+                  {{ match.result }}
+                {% elif match.status == 'live' %}
+                  <span class="text-warning fw-bold">{{ match.result }} 🔴</span>
+                {% elif match.status == 'postponed' %}
+                  <span class="text-muted">PPD</span>
+                {% elif match.status == 'void' %}
+                  <span class="text-muted">VOID</span>
+                {% else %}
+                  <span class="text-muted">vs</span>
+                {% endif %}
+              </td>
+              <td>{{ match.away_team }}</td>
+              <td>
+                  {% if match.prediction == '1' %}
+                    <span class="badge bg-primary">Home</span>
+                  {% elif match.prediction == 'X' %}
+                    <span class="badge bg-success">Draw</span>
+                  {% elif match.prediction == '2' %}
+                    <span class="badge bg-danger">Away</span>
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+              </td>
+              <td>{{ match.date|date:"d M Y" }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="6" class="text-center text-muted py-4">No predictions available for this week.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  {% endif %}
+
+{% endblock %}

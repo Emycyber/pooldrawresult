@@ -1,0 +1,31 @@
+{% extends "pool/base.html" %}
+{% load static %}
+
+{% block title %}Disclaimer | PoolDrawResult{% endblock %}
+{% block meta_description %}Read the PoolDrawResult disclaimer. All pool draw fixtures, results and predictions are for informational purposes only. Bet responsibly. 18+ only.{% endblock %}
+{% block og_title %}Disclaimer | PoolDrawResult{% endblock %}
+{% block og_description %}Read the PoolDrawResult disclaimer. All pool draw fixtures, results and predictions are for informational purposes only. Bet responsibly. 18+ only.{% endblock %}
+{% block og_image %}{% static 'images/og-default.jpg' %}{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb" style="font-size:13px;">
+          <li class="breadcrumb-item"><a href="/" style="color:var(--green);">Home</a></li>
+          <li class="breadcrumb-item active text-muted">Disclaimer</li>
+        </ol>
+      </nav>
+
+      <h1 class="section-title mb-4">Disclaimer</h1>
+      <div class="p-4 rounded" style="background:#fff; color:#111;">
+        <p>Betting involves financial risk. Only bet what you can afford to lose. PoolDrawResult does not guarantee winnings. Please gamble responsibly and within your means.</p>
+        <p>All information provided on this site is for informational purposes only. We are not responsible for any financial losses incurred from using our predictions or results.</p>
+        <span class="badge-18">18+ Only</span>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "pool/base.html" %}
+{% load static %}
+
+{% block title %}Advertise With Us | PoolDrawResult{% endblock %}
+{% block meta_description %}Advertise on PoolDrawResult and reach thousands of football pools enthusiasts worldwide daily. Contact us for advertising rates and enquiries.{% endblock %}
+{% block og_title %}Advertise With Us | PoolDrawResult{% endblock %}
+{% block og_description %}Advertise on PoolDrawResult and reach thousands of football pools enthusiasts worldwide daily. Contact us for advertising rates and enquiries.{% endblock %}
+{% block og_image %}{% static 'images/og-default.jpg' %}{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb" style="font-size:13px;">
+          <li class="breadcrumb-item"><a href="/" style="color:var(--green);">Home</a></li>
+          <li class="breadcrumb-item active text-muted">Advertise With Us</li>
+        </ol>
+      </nav>
+
+      <h1 class="section-title mb-4">Advertise With Us</h1>
+      <div class="p-4 rounded" style="background:#fff; color:#111;">
+        <p>Reach thousands of football pools enthusiasts daily by advertising on PoolDrawResult.</p>
+        <p>For advertising enquiries, contact us at:</p>
+        <p>
+          <i class="bi bi-envelope-fill me-2" style="color:var(--green);"></i>
+          <a href="mailto:pooldrawresult@gmail.com" style="color:var(--green);">pooldrawresult@gmail.com</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
