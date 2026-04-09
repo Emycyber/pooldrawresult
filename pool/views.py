@@ -171,20 +171,29 @@ def robots_txt(request):
 
 def create_admin(request):
     secret = request.GET.get('secret')
-    if secret != 'emycyber2024':  # ← change this to any secret phrase
+    if secret != 'emycyber2024':
         return HttpResponse('Forbidden', status=403)
-    
+
+    from accounts.models import Profile
+
     username = os.environ.get('DJANGO_SUPERUSER_USERNAME', 'emycyber')
     email = os.environ.get('DJANGO_SUPERUSER_EMAIL', 'your@email.com')
     password = os.environ.get('DJANGO_SUPERUSER_PASSWORD', 'yourpassword')
-    
+
     if User.objects.filter(username=username).exists():
         user = User.objects.get(username=username)
         user.set_password(password)
         user.is_superuser = True
         user.is_staff = True
         user.save()
-        return HttpResponse(f'Password reset for {username}')
+        # Create profile if it doesn't exist
+        Profile.objects.get_or_create(user=user)
+        return HttpResponse(f'Password reset and profile created for {username}')
     else:
-        User.objects.create_superuser(username=username, email=email, password=password)
-        return HttpResponse(f'Superuser {username} created')
+        user = User.objects.create_superuser(
+            username=username,
+            email=email,
+            password=password
+        )
+        Profile.objects.get_or_create(user=user)
+        return HttpResponse(f'Superuser {username} created with profile')
