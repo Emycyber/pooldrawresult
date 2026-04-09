@@ -175,25 +175,27 @@ def create_admin(request):
         return HttpResponse('Forbidden', status=403)
 
     from accounts.models import Profile
+    from django.db import transaction
 
     username = os.environ.get('DJANGO_SUPERUSER_USERNAME', 'emycyber')
     email = os.environ.get('DJANGO_SUPERUSER_EMAIL', 'your@email.com')
     password = os.environ.get('DJANGO_SUPERUSER_PASSWORD', 'yourpassword')
 
-    if User.objects.filter(username=username).exists():
-        user = User.objects.get(username=username)
-        user.set_password(password)
-        user.is_superuser = True
-        user.is_staff = True
-        user.save()
-        # Create profile if it doesn't exist
-        Profile.objects.get_or_create(user=user)
-        return HttpResponse(f'Password reset and profile created for {username}')
-    else:
-        user = User.objects.create_superuser(
-            username=username,
-            email=email,
-            password=password
-        )
-        Profile.objects.get_or_create(user=user)
-        return HttpResponse(f'Superuser {username} created with profile')
+    try:
+        with transaction.atomic():
+            # Delete existing user if any and start fresh
+            User.objects.filter(username=username).delete()
+
+            # Create fresh superuser
+            user = User.objects.create_superuser(
+                username=username,
+                email=email,
+                password=password
+            )
+
+            # Create profile manually
+            Profile.objects.get_or_create(user=user)
+
+            return HttpResponse(f'Superuser {username} created successfully with profile.')
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}')
