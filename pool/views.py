@@ -1,11 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import F
-from .models import Match, Week
-from blog.models import BlogPage
 from django.http import HttpResponse
-
-
 from django.contrib.auth.models import User
+from blog.models import BlogPage
+from .models import Match, Week
 import os
 
 
