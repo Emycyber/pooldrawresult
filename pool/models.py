@@ -44,10 +44,22 @@ class Match(models.Model):
         ('2', 'Away'),
     ]
 
+    DAY_CHOICES = [
+        ('Saturday', 'Saturday'),
+        ('Sunday', 'Sunday'),
+        ('Monday', 'Monday'),
+        ('Tuesday', 'Tuesday'),
+        ('Wednesday', 'Wednesday'),
+        ('Thursday', 'Thursday'),
+        ('Friday', 'Friday'),
+        ('EKO', 'EKO - Early Kick Off'),
+        ('LKO', 'LKO - Late Kick Off'),
+    ]
+
     week = models.ForeignKey(Week, on_delete=models.CASCADE, related_name='matches')
     match_number = models.PositiveIntegerField()
     league = models.ForeignKey(League, on_delete=models.SET_NULL, null=True, blank=True)
-    date = models.DateField(blank=True, null=True)
+    day = models.CharField(max_length=10, choices=DAY_CHOICES, blank=True)  # ← replaces date
 
     home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_matches')
     away_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_matches')
@@ -78,7 +90,7 @@ class Match(models.Model):
     def result(self):
         if self.home_score is not None and self.away_score is not None:
             return f"{self.home_score} – {self.away_score}"
-        return "–"   
+        return "–"
     
     
 class FooterLink(models.Model):

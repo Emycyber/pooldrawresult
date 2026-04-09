@@ -68,7 +68,7 @@
             <th>Home</th>
             <th class="text-center">Result</th>
             <th>Away</th>
-            <th>Date</th>
+            <th>Day</th>
           </tr>
         </thead>
         <tbody>
@@ -90,7 +90,7 @@
                 {% endif %}
               </td>
               <td>{{ match.away_team }}</td>
-              <td>{{ match.date|date:"d M Y" }}</td>
+              <td>{{ match.day }}</td>
             </tr>
           {% empty %}
             <tr>

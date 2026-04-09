@@ -6,10 +6,9 @@ from .models import FooterLink
 
 class MatchInline(admin.TabularInline):
     model = Match
-    extra = 1                    # ← one empty row to add a new match
-    show_change_link = True      # ← click to open the match edit page
-    fields = ['match_number', 'home_team', 'away_team', 'home_score', 'away_score', 'status', 'prediction']
-
+    extra = 0
+    show_change_link = True
+    fields = ['match_number', 'home_team', 'away_team', 'home_score', 'away_score', 'day', 'status', 'prediction']
 
 @admin.register(Week)
 class WeekAdmin(admin.ModelAdmin):
@@ -25,7 +24,7 @@ class MatchAdmin(admin.ModelAdmin):
         'match_number',
         ('home_team', 'away_team'),
         ('home_score', 'away_score'),
-        ('league', 'date'),
+        ('league', 'day'),
         ('status', 'prediction'),
     ]
 
