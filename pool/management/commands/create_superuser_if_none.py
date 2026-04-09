@@ -6,12 +6,22 @@ import os
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
-        if not User.objects.filter(is_superuser=True).exists():
-            User.objects.create_superuser(
-                username=os.environ.get('DJANGO_SUPERUSER_USERNAME'),
-                email=os.environ.get('DJANGO_SUPERUSER_EMAIL'),
-                password=os.environ.get('DJANGO_SUPERUSER_PASSWORD'),
-            )
-            self.stdout.write('Superuser created successfully.')
+        username = os.environ.get('DJANGO_SUPERUSER_USERNAME')
+        email = os.environ.get('DJANGO_SUPERUSER_EMAIL')
+        password = os.environ.get('DJANGO_SUPERUSER_PASSWORD')
+
+        if User.objects.filter(username=username).exists():
+            # Update existing user's password
+            user = User.objects.get(username=username)
+            user.set_password(password)
+            user.is_superuser = True
+            user.is_staff = True
+            user.save()
+            self.stdout.write(f'Password updated for {username}')
         else:
-            self.stdout.write('Superuser already exists — skipping.')
+            User.objects.create_superuser(
+                username=username,
+                email=email,
+                password=password,
+            )
+            self.stdout.write(f'Superuser {username} created successfully.')
