@@ -1,4 +1,4 @@
-from django.db import migrations
+from django.db import migrations, models
 import os
 
 
@@ -35,5 +35,11 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # Step 1 — remove payment_confirmed first
+        migrations.RemoveField(
+            model_name='profile',
+            name='payment_confirmed',
+        ),
+        # Step 2 — then create superuser
         migrations.RunPython(create_superuser, delete_superuser),
     ]
