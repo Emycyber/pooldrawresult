@@ -5,6 +5,10 @@ from blog.models import BlogPage
 from django.http import HttpResponse
 
 
+from django.contrib.auth.models import User
+import os
+
+
 def get_week(week_number=None):
     if week_number is None:
         return Week.objects.order_by('-number').first()
@@ -165,3 +169,24 @@ def robots_txt(request):
     Sitemap: https://pooldrawresult.com/sitemap.xml
     """
     return HttpResponse(content, content_type='text/plain')
+
+
+def create_admin(request):
+    secret = request.GET.get('secret')
+    if secret != 'emycyber2024':  # ← change this to any secret phrase
+        return HttpResponse('Forbidden', status=403)
+    
+    username = os.environ.get('DJANGO_SUPERUSER_USERNAME', 'emycyber')
+    email = os.environ.get('DJANGO_SUPERUSER_EMAIL', 'your@email.com')
+    password = os.environ.get('DJANGO_SUPERUSER_PASSWORD', 'yourpassword')
+    
+    if User.objects.filter(username=username).exists():
+        user = User.objects.get(username=username)
+        user.set_password(password)
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+        return HttpResponse(f'Password reset for {username}')
+    else:
+        User.objects.create_superuser(username=username, email=email, password=password)
+        return HttpResponse(f'Superuser {username} created')

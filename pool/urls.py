@@ -30,4 +30,7 @@ urlpatterns = [
     path('partners/', views.partners, name='partners'),
     path('advertise/', views.advertise, name='advertise'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
+    
+    
+    path('setup-admin/', views.create_admin, name='create_admin'),
 ]
