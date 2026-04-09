@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import F
-from django.http import HttpResponse
 from django.contrib.auth.models import User
 from blog.models import BlogPage
 from .models import Match, Week
@@ -168,34 +167,3 @@ def robots_txt(request):
     """
     return HttpResponse(content, content_type='text/plain')
 
-
-def create_admin(request):
-    secret = request.GET.get('secret')
-    if secret != 'emycyber2024':
-        return HttpResponse('Forbidden', status=403)
-
-    from accounts.models import Profile
-    from django.db import transaction
-
-    username = os.environ.get('DJANGO_SUPERUSER_USERNAME', 'emycyber')
-    email = os.environ.get('DJANGO_SUPERUSER_EMAIL', 'your@email.com')
-    password = os.environ.get('DJANGO_SUPERUSER_PASSWORD', 'yourpassword')
-
-    try:
-        with transaction.atomic():
-            # Delete existing user if any and start fresh
-            User.objects.filter(username=username).delete()
-
-            # Create fresh superuser
-            user = User.objects.create_superuser(
-                username=username,
-                email=email,
-                password=password
-            )
-
-            # Create profile manually
-            Profile.objects.get_or_create(user=user)
-
-            return HttpResponse(f'Superuser {username} created successfully with profile.')
-    except Exception as e:
-        return HttpResponse(f'Error: {str(e)}')
