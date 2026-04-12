@@ -169,7 +169,7 @@
               <li><a href="/">Home</a></li>
               <li><a href="/fixtures/">Fixtures</a></li>
               <li><a href="/results/">Results</a></li>
-              <li><a href="/predictions/">Predictions</a></li>
+              <li><a href="{% url 'pool:predictions' %}">Predictions</a></li>
               <li><a href="/archive/">Archive</a></li>
               <li><a href="/blog/">Blog</a></li>
               <li><a href="/about/">About Us</a></li>
@@ -183,7 +183,7 @@
           <div class="col-6 col-sm-6 col-lg-3 footer-col">
             <h5 class="mb-4">Contact Us</h5>
             <div class="contact-item"><i class="bi bi-envelope-fill"></i><span>pdresult@gmail.com</span></div>
-            <div class="contact-item"><i class="bi bi-telephone-fill"></i><span>+234 800 000 0000</span></div>
+            <div class="contact-item"><i class="bi bi-telephone-fill"></i><span>+234 8104094348</span></div>
             <div class="contact-item"><i class="bi bi-geo-alt-fill"></i><span>Lagos, Nigeria</span></div>
           </div>
 
@@ -227,15 +227,7 @@
       <div class="footer-bottom">
         <div class="container-xl py-3 d-flex flex-wrap justify-content-between align-items-center gap-3">
           <p class="mb-0">PoolDrawResult &copy; {% now "Y" %} &mdash; All rights reserved.
-            <a href="/disclaimer/" class="ms-3 text-muted" style="font-size:12px;">Disclaimer</a>
-            <a href="/advertise/" class="ms-2 text-muted" style="font-size:12px;">Advertise</a>
           </p>
-          <div class="d-flex gap-2">
-            <a href="#" class="social-btn" title="Twitter/X"><i class="bi bi-twitter-x"></i></a>
-            <a href="#" class="social-btn" title="Facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="social-btn" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
-            <a href="#" class="social-btn" title="Telegram"><i class="bi bi-telegram"></i></a>
-          </div>
         </div>
       </div>
 
