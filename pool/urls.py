@@ -17,8 +17,8 @@ urlpatterns = [
     path('fixtures/week/<int:week_number>/', views.fixtures, name='fixtures_week'),
 
     # Predictions
-    path('predictions/', views.predictions, name='predictions'),
-    path('predictions/week/<int:week_number>/', views.predictions, name='predictions_week'),
+    path('uk-pool-draw-predictions/', views.predictions, name='predictions'),
+    path('uk-pool-draw-predictions/week/<int:week_number>/', views.predictions, name='predictions_week'),
 
     # Archive
     path('archive/', views.archive, name='archive'),

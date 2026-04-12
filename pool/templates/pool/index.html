@@ -137,6 +137,26 @@
       {% endif %}
     </div>
 
+     <!-- About Paragraph Section -->
+    <section class="py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div >
+                    <h4 class="fw-bold mb-3">About PoolDrawResult</h4>
+                    <p class="text-muted">
+                        PoolDrawResult is your one-stop place to get pool fixtures and results. We make it even simpler for you as you get 
+                        a draw count for a particular week and also each match that ends in a draw has a row colour of blue. 
+
+                        To take things further, we have our <a href="{% url 'pool:predictions' %}">uk pool prediction page</a> where you can see out predictions for the week.
+                        Bear in mind this are all just information, you are responsible for how you use it.
+
+                        This site is run by Emem and his team.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ── LATEST BLOG POSTS ── -->
     {% if latest_posts %}
       <div class="mt-5">
