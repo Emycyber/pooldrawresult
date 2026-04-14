@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 import dj_database_url
 import os
+import cloudinary
 
 load_dotenv()
 
@@ -28,9 +29,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django.contrib.postgres',
+    'cloudinary',
 
     # Third party
     'whitenoise.runserver_nostatic',
@@ -54,6 +57,7 @@ INSTALLED_APPS = [
     'pool',
     'blog',
     'accounts',
+    
 ]
 
 
@@ -156,6 +160,23 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
     'CSRF_TRUSTED_ORIGINS',
     'http://127.0.0.1:8000'
 ).split(',')
+
+
+# ── CLOUDINARY ────────────────────────────────────────
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+cloudinary.config(
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+)
+
+# Use Cloudinary for media files
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # ── PRODUCTION SECURITY ───────────────────────────────
