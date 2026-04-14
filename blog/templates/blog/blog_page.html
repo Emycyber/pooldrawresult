@@ -1,13 +1,32 @@
 {% extends "pool/base.html" %}
 {% load static %}
 {% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
 
 {% block title %}{{ page.seo_title|default:page.title }} | PoolDrawResult{% endblock %}
 {% block meta_description %}{{ page.search_description|default:page.intro }}{% endblock %}
 {% block og_title %}{{ page.title }} | PoolDrawResult{% endblock %}
 {% block og_description %}{{ page.search_description|default:page.intro }}{% endblock %}
+{% block og_image %}
+  {% if page.banner_image %}
+    {% image page.banner_image width-1200 as og_img %}
+    {{ og_img.url }}
+  {% else %}
+    {% static 'images/og-default.jpg' %}
+  {% endif %}
+{% endblock %}
 
 {% block content %}
+
+  <!-- Banner Image -->
+  {% if page.banner_image %}
+    {% image page.banner_image width-1200 as banner %}
+    <div style="margin:-3rem -12px 2rem; height:300px; overflow:hidden; position:relative;">
+      <img src="{{ banner.url }}" alt="{{ page.banner_image.title }}"
+           style="width:100%; height:100%; object-fit:cover;">
+      <div style="position:absolute; inset:0; background:linear-gradient(to bottom, transparent 40%, rgba(11,15,26,0.8));"></div>
+    </div>
+  {% endif %}
 
   <div class="row justify-content-center">
     <div class="col-lg-8">
@@ -48,18 +67,22 @@
       <div style="background:#fff; color:#111; border-radius:8px; padding:32px;">
         {% for block in page.content %}
           {% if block.block_type == 'heading' %}
-            <h3 style="font-family:var(--font-head); font-size:22px; font-weight:700; margin-top:28px; margin-bottom:12px; color:#111;">
+            <h2 style="font-family:var(--font-head); font-size:22px; font-weight:700; margin-top:28px; margin-bottom:12px; color:#111;">
               {{ block.value }}
-            </h3>
+            </h2>
           {% elif block.block_type == 'paragraph' %}
             <div style="font-size:15px; line-height:1.85; margin-bottom:16px;">
               {% include_block block %}
             </div>
           {% elif block.block_type == 'image' %}
             <figure class="my-4 text-center">
-              <img src="{{ block.value.file.url }}" class="img-fluid rounded" alt="{{ block.value.title }}" style="max-width:100%;">
+              {% image block.value width-800 as content_img %}
+              <img src="{{ content_img.url }}" class="img-fluid rounded"
+                   alt="{{ block.value.title }}" style="max-width:100%;">
               {% if block.value.title %}
-                <figcaption class="mt-2" style="font-size:12px; color:#888;">{{ block.value.title }}</figcaption>
+                <figcaption class="mt-2" style="font-size:12px; color:#888;">
+                  {{ block.value.title }}
+                </figcaption>
               {% endif %}
             </figure>
           {% endif %}
@@ -67,7 +90,7 @@
       </div>
 
       <!-- Back to Blog -->
-      <div class="mt-4">
+      <div class="mt-4 mb-2">
         <a href="/blog/" class="btn btn-outline-secondary btn-sm">
           <i class="bi bi-arrow-left me-1"></i> Back to Blog
         </a>

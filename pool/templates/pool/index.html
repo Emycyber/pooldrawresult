@@ -127,7 +127,7 @@
           <i class="bi bi-arrow-left"></i> Previous Week
         </a>
       {% endif %}
-      <a href="/predictions/" class="btn btn-sm" style="background:var(--green); color:#000; font-family:var(--font-head);">
+      <a href="{% url 'pool:predictions' %}" class="btn btn-sm" style="background:var(--green); color:#000; font-family:var(--font-head);">
         Pool Predictions This Week
       </a>
       {% if next_week %}

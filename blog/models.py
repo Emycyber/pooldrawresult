@@ -4,6 +4,7 @@ from wagtail.fields import StreamField
 from wagtail import blocks
 from wagtail.admin.panels import FieldPanel
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.images.models import Image
 from django.utils import timezone
 from wagtail.snippets.models import register_snippet
 from taggit.models import TaggedItemBase
@@ -44,6 +45,13 @@ class BlogIndexPage(Page):
 class BlogPage(Page):
     date = models.DateField("Post date", default=timezone.now)
     intro = models.CharField(max_length=250, blank=True)
+    banner_image = models.ForeignKey(          # ← add this
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
     content = StreamField([
         ('heading', blocks.CharBlock()),
@@ -57,6 +65,7 @@ class BlogPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         FieldPanel('intro'),
+        FieldPanel('banner_image'), 
         FieldPanel('categories'),
         FieldPanel('tags'),
         FieldPanel('content'),
