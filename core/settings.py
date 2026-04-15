@@ -29,11 +29,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',              # ← must be before staticfiles
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django.contrib.postgres',
-    'cloudinary',
+    'cloudinary',                      # ← cloudinary only, NOT cloudinary_storage
 
     # Third party
     'whitenoise.runserver_nostatic',
@@ -129,18 +128,22 @@ USE_I18N = True
 USE_TZ = True
 
 
-# ── STATIC FILES ─────────────────────────────────────
+# ── STATIC FILES (WhiteNoise handles this) ────────────
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
-# ── CLOUDINARY & MEDIA STORAGE ───────────────────────
+# ── MEDIA & CLOUDINARY ────────────────────────────────
 CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME')
 CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY')
 CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET')
 
 if CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
+    import cloudinary.uploader
+    import cloudinary.api
+
     cloudinary.config(
         cloud_name=CLOUDINARY_CLOUD_NAME,
         api_key=CLOUDINARY_API_KEY,
@@ -148,34 +151,22 @@ if CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
         secure=True,
     )
 
+    # Use Cloudinary for media only
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
     CLOUDINARY_STORAGE = {
         'CLOUD_NAME': CLOUDINARY_CLOUD_NAME,
         'API_KEY': CLOUDINARY_API_KEY,
         'API_SECRET': CLOUDINARY_API_SECRET,
     }
 
-    STORAGES = {
-        'default': {
-            'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
-        },
-        'staticfiles': {
-            'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',  # ← no Manifest
-        },
-    }
-
     MEDIA_URL = '/media/'
 
 else:
-    STORAGES = {
-        'default': {
-            'BACKEND': 'django.core.files.storage.FileSystemStorage',
-        },
-        'staticfiles': {
-            'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',  # ← no Manifest
-        },
-    }
     MEDIA_URL = '/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
+
+WAGTAILIMAGES_MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
 
 
 # ── DEFAULT PRIMARY KEY ───────────────────────────────
@@ -198,10 +189,6 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
     'CSRF_TRUSTED_ORIGINS',
     'http://127.0.0.1:8000'
 ).split(',')
-
-
-# Add this anywhere in settings.py outside the STORAGES block
-STATICFILES_STORAGE = STORAGES['staticfiles']['BACKEND']
 
 
 # ── PRODUCTION SECURITY ───────────────────────────────
