@@ -32,7 +32,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django.contrib.postgres',
-    'cloudinary',                      # ← cloudinary only, NOT cloudinary_storage
+
+    # Cloudinary
+    'cloudinary',
+    'cloudinary_storage',
 
     # Third party
     'whitenoise.runserver_nostatic',
@@ -128,43 +131,38 @@ USE_I18N = True
 USE_TZ = True
 
 
-# ── STATIC FILES (WhiteNoise handles this) ────────────
+# ── STORAGE ───────────────────────────────────────────
+STORAGES = {
+    'default': {
+        'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
+
+# ── STATIC FILES ─────────────────────────────────────
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
+# ── MEDIA FILES ───────────────────────────────────────
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
-# ── MEDIA & CLOUDINARY ────────────────────────────────
-CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME')
-CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY')
-CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET')
+# ── CLOUDINARY ────────────────────────────────────────
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
 
-if CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
-    import cloudinary.uploader
-    import cloudinary.api
-
-    cloudinary.config(
-        cloud_name=CLOUDINARY_CLOUD_NAME,
-        api_key=CLOUDINARY_API_KEY,
-        api_secret=CLOUDINARY_API_SECRET,
-        secure=True,
-    )
-
-    # Use Cloudinary for media only
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-    CLOUDINARY_STORAGE = {
-        'CLOUD_NAME': CLOUDINARY_CLOUD_NAME,
-        'API_KEY': CLOUDINARY_API_KEY,
-        'API_SECRET': CLOUDINARY_API_SECRET,
-    }
-
-    MEDIA_URL = '/media/'
-
-else:
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
+cloudinary.config(
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+    secure=True,
+)
 
 WAGTAILIMAGES_MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
 
