@@ -168,3 +168,15 @@ def robots_txt(request):
     """
     return HttpResponse(content, content_type='text/plain')
 
+
+
+def check_cloudinary(request):
+    import os
+    data = {
+        'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'NOT SET'),
+        'API_KEY': os.environ.get('CLOUDINARY_API_KEY', 'NOT SET'),
+        'API_SECRET': 'SET' if os.environ.get('CLOUDINARY_API_SECRET') else 'NOT SET',
+        'DEFAULT_FILE_STORAGE': getattr(__import__('django.conf', fromlist=['settings']).settings, 'DEFAULT_FILE_STORAGE', 'NOT SET'),
+    }
+    from django.http import JsonResponse
+    return JsonResponse(data)
