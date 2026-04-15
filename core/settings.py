@@ -200,6 +200,10 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
 ).split(',')
 
 
+# Add this anywhere in settings.py outside the STORAGES block
+STATICFILES_STORAGE = STORAGES['staticfiles']['BACKEND']
+
+
 # ── PRODUCTION SECURITY ───────────────────────────────
 if not DEBUG:
     SECURE_BROWSER_XSS_FILTER = True
