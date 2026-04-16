@@ -28,9 +28,6 @@ urlpatterns = [
     
     path('', include('accounts.urls')),
 
-    # Blog app
-    # path('blog/', include('blog.urls')),
-
     # Sitemap
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
 
