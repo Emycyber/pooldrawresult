@@ -32,7 +32,7 @@ class BlogIndexPage(Page):
     """The parent listing page for all blog posts."""
 
     subpage_types = ['blog.BlogPage']  # ← only BlogPage can be created under this
-    max_count = 1                      # ← only ONE BlogIndexPage can ever exist site-wide
+    # max_count = 1                      # ← only ONE BlogIndexPage can ever exist site-wide
     template = "blog/blog_index_page.html"
 
     content_panels = Page.content_panels
