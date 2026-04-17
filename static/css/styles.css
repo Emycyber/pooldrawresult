@@ -465,3 +465,31 @@ footer {
 .pool-table tbody tr.table-success td {
   background: rgba(0, 200, 83, 0.15);
 }
+
+/* ── BLOG CONTENT ── */
+.blog-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto;
+}
+
+.blog-content figure {
+  max-width: 100%;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.blog-content {
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Fix Wagtail RichText images */
+.blog-content .richtext img,
+.blog-content p img {
+  max-width: 100% !important;
+  height: auto !important;
+}

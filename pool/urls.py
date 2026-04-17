@@ -30,8 +30,5 @@ urlpatterns = [
     path('partners/', views.partners, name='partners'),
     path('advertise/', views.advertise, name='advertise'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
-    
-    
-    path('check-cloudinary/', views.check_cloudinary, name='check_cloudinary'),
-    
+        
 ]
