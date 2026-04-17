@@ -14,7 +14,18 @@ def get_week(week_number=None):
 
 
 def home(request, week_number=None):
-    current_week = get_week(week_number)
+    if week_number:
+        current_week = get_week(week_number)
+    else:
+        # Find the most recent week that has at least one result
+        from django.db.models import Count
+        current_week = Week.objects.filter(
+            matches__status='result'
+        ).order_by('-number').first()
+
+        # If no results yet fall back to latest week
+        if not current_week:
+            current_week = Week.objects.order_by('-number').first()
 
     if current_week is None:
         return render(request, 'pool/index.html', {'no_data': True})
@@ -34,9 +45,8 @@ def home(request, week_number=None):
 
     previous_week = Week.objects.filter(number__lt=current_week.number).order_by('-number').first()
     next_week = Week.objects.filter(number__gt=current_week.number).order_by('number').first()
-    
+    has_live_matches = matches.filter(status='live').exists()
     latest_posts = BlogPage.objects.live().public().order_by('-date')[:3]
-
 
     return render(request, 'pool/index.html', {
         'week': current_week,
@@ -45,8 +55,10 @@ def home(request, week_number=None):
         'draw_count': draw_count,
         'previous_week': previous_week,
         'next_week': next_week,
+        'has_live_matches': has_live_matches,
         'latest_posts': latest_posts,
     })
+
 
 
 def predictions(request, week_number=None):
@@ -125,7 +137,20 @@ def results(request, week_number=None):
 
 
 def fixtures(request, week_number=None):
-    current_week = get_week(week_number)
+    if week_number:
+        current_week = get_week(week_number)
+    else:
+        # Find the most recent week where ALL matches are still fixtures
+        # i.e no results recorded yet
+        current_week = Week.objects.filter(
+            matches__status='fixture'
+        ).exclude(
+            matches__status='result'
+        ).order_by('-number').first()
+
+        # If no pure fixture week found, use latest week
+        if not current_week:
+            current_week = Week.objects.order_by('-number').first()
 
     if current_week is None:
         return render(request, 'pool/fixtures.html', {'no_data': True})
@@ -133,7 +158,7 @@ def fixtures(request, week_number=None):
     weeks = Week.objects.order_by('-number')
     matches = (
         Match.objects
-        .filter(week=current_week, status='fixture')
+        .filter(week=current_week)
         .select_related('home_team', 'away_team', 'league')
         .order_by('match_number')
     )
@@ -148,7 +173,6 @@ def fixtures(request, week_number=None):
         'previous_week': previous_week,
         'next_week': next_week,
     })
-
 
 def archive(request):
     weeks = Week.objects.all().order_by('-number')

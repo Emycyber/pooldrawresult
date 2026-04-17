@@ -8,9 +8,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('week/<int:week_number>/', views.home, name='week_view'),
 
-    # Results
-    path('results/', views.results, name='results'),
-    path('results/week/<int:week_number>/', views.results, name='results_week'),
 
     # Fixtures
     path('fixtures/', views.fixtures, name='fixtures'),
