@@ -4,23 +4,16 @@ from django.core.management.base import BaseCommand
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
-        from wagtail.models import Page, Site, PageRevision, PageLogEntry
+        from wagtail.models import Page, Site, PageLogEntry
         from wagtail.images.models import Image, Rendition
 
         self.stdout.write('Starting Wagtail reset...')
 
-        # Clear everything
         try:
             PageLogEntry.objects.all().delete()
             self.stdout.write('Cleared page log entries')
         except Exception as e:
             self.stdout.write(f'Log entries: {e}')
-
-        try:
-            PageRevision.objects.all().delete()
-            self.stdout.write('Cleared page revisions')
-        except Exception as e:
-            self.stdout.write(f'Revisions: {e}')
 
         try:
             Rendition.objects.all().delete()
@@ -41,7 +34,6 @@ class Command(BaseCommand):
             self.stdout.write(f'Sites: {e}')
 
         try:
-            # Delete all pages except root (depth=1)
             Page.objects.filter(depth__gt=1).delete()
             self.stdout.write('Cleared all pages except root')
         except Exception as e:
