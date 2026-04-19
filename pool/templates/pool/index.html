@@ -1,8 +1,10 @@
 {% extends "pool/base.html" %}
+{% load static %}
 {% load wagtailcore_tags %}
 
+
 {% block title %}Week {{ week.number }} Pool Result ({{ week.season }}) | PoolDrawResult{% endblock %}
-{% block meta_description %}Week {{ week.number }} pool fixtures and results for the {{ week.season }} season. {{ draw_count }} draws recorded. Updated weekly.{% endblock %}
+{% block meta_description %}Week {{ week.number }} UK and Aussie football pool draw fixtures and results for the {{ week.season }} season. {{ draw_count }} draws recorded. Updated every Saturday.{% endblock %}
 
 {% block extra_css %}
 
@@ -36,7 +38,7 @@
     <!-- Week Selector -->
     <div class="row align-items-center mb-4">
       <div class="col-md-6">
-        <h2 class="section-title mb-0">Week {{ week.number }} — {{ week.season }}</h2>
+        <h2 class="section-title mb-0">Week {{ week.number }} Pool Result — {{ week.season }}</h2>
         <p class="text-muted mt-1" style="font-size:13px;">
           <i class="bi bi-calendar3"></i> {{ week.date|date:"l, d F Y" }}
         </p>

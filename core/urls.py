@@ -6,11 +6,10 @@ from django.conf.urls.static import static
 from wagtail import urls as wagtail_urls
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap as wagtail_sitemap
-from .sitemaps import WeekSitemap, ResultsSitemap, FixturesSitemap, StaticPagesSitemap, BlogSitemap
+from .sitemaps import WeekSitemap, FixturesSitemap, StaticPagesSitemap, BlogSitemap
 
 sitemaps = {
     'weeks': WeekSitemap,
-    'results': ResultsSitemap,
     'fixtures': FixturesSitemap,
     'static': StaticPagesSitemap,
     'blog': BlogSitemap,

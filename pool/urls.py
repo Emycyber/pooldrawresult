@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.views.generic import RedirectView
+
 
 app_name = 'pool'
 
@@ -12,6 +14,11 @@ urlpatterns = [
     # Fixtures
     path('fixtures/', views.fixtures, name='fixtures'),
     path('fixtures/week/<int:week_number>/', views.fixtures, name='fixtures_week'),
+    
+    
+    # Redirect old results URLs to home week view
+    path('results/', RedirectView.as_view(pattern_name='pool:home'), name='results'),
+    path('results/week/<int:week_number>/', views.home, name='results_week'),
 
     # Predictions
     path('uk-pool-draw-predictions/', views.predictions, name='predictions'),
