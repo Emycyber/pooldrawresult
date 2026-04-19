@@ -12,7 +12,8 @@ class MatchInline(admin.TabularInline):
 
 @admin.register(Week)
 class WeekAdmin(admin.ModelAdmin):
-    list_display = ['number', 'season', 'date']
+    list_display = ['number', 'season', 'date', 'is_current', 'is_current_fixture']
+    list_editable = ['is_current', 'is_current_fixture']  # ← tick directly from list
     inlines = [MatchInline]
 
 

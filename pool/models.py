@@ -21,6 +21,8 @@ class Week(models.Model):
     number = models.IntegerField()
     season = models.CharField(max_length=20)
     date = models.DateField(help_text="The Saturday this week's matches are played")
+    is_current = models.BooleanField(default=False, help_text="Show this week on the homepage by default")
+    is_current_fixture = models.BooleanField(default=False, help_text="Show this week on the fixtures page by default")
 
     class Meta:
         ordering = ['-number']

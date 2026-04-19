@@ -97,11 +97,11 @@
         <!-- Nav Links + Login -->
         <div class="collapse navbar-collapse" id="mainNav">
           <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1 me-lg-3 mt-3 mt-lg-0">
-            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="/blog/">Blog</a></li>
-            <li class="nav-item"><a class="nav-link" href="/fixtures/">Fixtures</a></li>
-            <li class="nav-item"><a class="nav-link" href="/about/">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="/contact/">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'pool:home' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'pool:blog' %}">Blog</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'pool:fixtures' %}">Fixtures</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'pool:about' %}">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'pool:contact' %}">Contact</a></li>
           </ul>
           {% if request.user.is_authenticated %}
   <a href="/dashboard/" class="btn btn-cta mb-3 mb-lg-0">
@@ -163,15 +163,15 @@
           <div class="col-6 col-sm-3 col-lg-2 footer-col">
             <h5 class="mb-4">Quick Links</h5>
             <ul class="footer-links">
-              <li><a href="/">Home</a></li>
-              <li><a href="/fixtures/">Fixtures</a></li>
+              <li><a href="{% url 'pool:home' %}">Home</a></li>
+              <li><a href="{% url 'pool:fixtures' %}">Fixtures</a></li>
               <li><a href="{% url 'pool:predictions' %}">Predictions</a></li>
-              <li><a href="/archive/">Archive</a></li>
-              <li><a href="/blog/">Blog</a></li>
-              <li><a href="/about/">About Us</a></li>
-              <li><a href="/advertise/">Advertise</a></li>
-              <li><a href="/disclaimer/">Disclaimer</a></li>
-              <li><a href="/contact/">Contact</a></li>
+              <li><a href="{% url 'pool:archive' %}">Archive</a></li>
+              <li><a href="{% url 'pool:blog' %}">Blog</a></li>
+              <li><a href="{% url 'pool:about' %}">About Us</a></li>
+              <li><a href="{% url 'pool:advertise' %}">Advertise</a></li>
+              <li><a href="{% url 'pool:disclaimer' %}">Disclaimer</a></li>
+              <li><a href="{% url 'pool:contact' %}">Contact</a></li>
             </ul>
           </div>
 
