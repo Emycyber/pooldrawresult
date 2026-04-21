@@ -38,6 +38,19 @@ def home(request, week_number=None):
         away_score__isnull=False,
         home_score=F('away_score')
     ).count()
+    
+    # Score draws - get match numbers (both teams scored)
+    score_draws = matches.filter(
+        home_score__isnull=False,
+        away_score__isnull=False,
+        home_score=F('away_score')
+    ).exclude(home_score=0).values_list('match_number', flat=True).order_by('match_number')
+
+    # Scoreless draws - get match numbers (0-0)
+    scoreless_draws = matches.filter(
+        home_score=0,
+        away_score=0
+    ).values_list('match_number', flat=True).order_by('match_number')
 
     previous_week = Week.objects.filter(number__lt=current_week.number).order_by('-number').first()
     next_week = Week.objects.filter(number__gt=current_week.number).order_by('number').first()
@@ -49,10 +62,13 @@ def home(request, week_number=None):
         'weeks': weeks,
         'matches': matches,
         'draw_count': draw_count,
+        'score_draws': score_draws,
+        'scoreless_draws': scoreless_draws,
         'previous_week': previous_week,
         'next_week': next_week,
         'has_live_matches': has_live_matches,
         'latest_posts': latest_posts,
+        
     })
 
 
