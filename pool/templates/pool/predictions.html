@@ -28,8 +28,8 @@
       <div class="col-md-4 mt-3 mt-md-0">
         <select class="form-select" onchange="location = this.value">
           {% for w in weeks %}
-            <option value="/predictions/week/{{ w.number }}/" {% if w.number == week.number %}selected{% endif %}>
-              Week {{ w.number }} | {{ w.season }}
+            <option value="{% url 'pool:predictions_week' w.number %}" ...>
+            Week {{ w.number }} | {{ w.season }}
             </option>
           {% endfor %}
         </select>
