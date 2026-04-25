@@ -4,10 +4,54 @@
 
 
 {% block title %}Week {{ week.number }} Pool Result ({{ week.season }}) | PoolDrawResult{% endblock %}
-{% block meta_description %}Week {{ week.number }} UK and Aussie football pool draw fixtures and results for the {{ week.season }} season. {{ draw_count }} draws recorded. Updated every Saturday.{% endblock %}
+{% block meta_description %}Week {{ week.number }} UK football pool draw fixtures and results for the {{ week.season }} season. {{ draw_count }} draws recorded. Updated every Saturday.{% endblock %}
 
 {% block extra_css %}
-
+<style>
+  /* FAQ accordion styling */
+  .faq-section {
+    margin-top: 3rem;
+  }
+  .faq-item {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .faq-item summary {
+    padding: 14px 18px;
+    cursor: pointer;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 15px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: "+";
+    font-size: 22px;
+    color: var(--green);
+    transition: transform 0.2s;
+  }
+  .faq-item[open] summary::after {
+    content: "−";
+  }
+  .faq-item .faq-answer {
+    padding: 0 18px 16px;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .faq-item .faq-answer a {
+    color: var(--green);
+    text-decoration: underline;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -16,7 +60,7 @@
   <div class="hero" style="margin: -3rem -12px 2rem;">
     <div class="hero-content">
       <h1 class="hero-title">Pool Draw <span>Fixtures & Results</span></h1>
-      <p class="hero-sub">Updated every Saturday &mdash; UK &amp; International Pools</p>
+      <p class="hero-sub">Latest UK football pool results — score draws, scoreless draws, and full fixtures from the Premier League, Championship, League One, League Two, and Scottish Premiership, updated every Saturday.</p>
       <div class="hero-buttons">
         <a href="https://surecodes24.com" target="_blank" rel="noopener" class="hero-btn hero-btn-outline">
           SureCodes24
@@ -158,20 +202,74 @@
     <section class="py-4">
         <div class="container">
             <div class="row justify-content-center">
-                <div >
+                <div>
                     <h4 class="fw-bold mb-3">About PoolDrawResult</h4>
                     <p class="text-muted">
-                        PoolDrawResult is your one-stop place to get pool fixtures and results. We make it even simpler for you as you get 
-                        a draw count for a particular week and also each match that ends in a draw has a row colour of blue. 
-
-                        To take things further, we have our <a href="{% url 'pool:predictions' %}">uk pool prediction page</a> where you can see out predictions for the week.
-                        Bear in mind this are all just information, you are responsible for how you use it.
-
-                        This site is run by Emem and his team.
+                        PoolDrawResult is a weekly UK football pool results service covering every match on the standard pool coupon &mdash; from the Premier League and Championship down to League One, League Two, and the Scottish Premiership. Each Saturday, we publish the full week's results with score draws and scoreless draws clearly marked, so pool players can scan the coupon at a glance and check their lines in seconds.
+                    </p>
+                    <p class="text-muted">
+                        Beyond the weekly results above, we also run a <a href="{% url 'pool:predictions' %}">pool predictions page</a> where our team shares draw picks for the upcoming week, a <a href="/fixtures/">fixtures page</a> for the matches ahead, and a <a href="/login/">Weekend Banker</a> for VIP subscribers who want a sharper look at the most likely draws. Past weeks are all archived and easy to browse using the week selector at the top of the results table.
+                    </p>
+                    <p class="text-muted">
+                        The site is run by Emem and a small team based in Lagos, Nigeria, with a focus on getting results out fast and accurately every weekend. Pool betting involves financial risk &mdash; everything we publish is for information only, and you're responsible for how you use it. Play within your means, and treat the pools as entertainment first.
                     </p>
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- ── FAQ SECTION ── -->
+    <section class="faq-section">
+      <h3 class="section-title mb-4">Frequently Asked Questions About Pool Draws</h3>
+
+      <details class="faq-item">
+        <summary>What is a pool draw?</summary>
+        <div class="faq-answer">
+          A pool draw is a football match that ends in a tie that was among the pool fixtures for that week&mdash; either a score draw (both teams score, like 1&ndash;1 or 2&ndash;2) or a scoreless draw (0&ndash;0). In UK football pools, players attempt to predict which matches on the weekly coupon will end in draws, and correctly identifying enough of them wins the pool.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>What's the difference between a score draw and a scoreless draw?</summary>
+        <div class="faq-answer">
+          A score draw is any drawn match where both teams score &mdash; 1&ndash;1, 2&ndash;2, 3&ndash;3, and so on. A scoreless draw is specifically 0&ndash;0. Most traditional UK pools only pay out on score draws, which is why our results page lists them separately.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>When are pool results released each week?</summary>
+        <div class="faq-answer">
+          Pool results are released every match day evening after the final matches on the coupon finish. At PoolDrawResult, we update the page live as results come in, so you can check progress throughout the day.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>What do EKO and LKO mean on the pool coupon?</summary>
+        <div class="faq-answer">
+          EKO stands for Early Kick-Off and LKO stands for Late Kick-Off. These are matches that kick off outside the standard Saturday 3pm window &mdash; typically Friday evening, Saturday lunchtime, or Saturday evening games. They're marked separately because they often affect how bookmakers and pool operators time the coupon.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>How many draws usually happen in a week?</summary>
+        <div class="faq-answer">
+          A typical UK pool coupon produces between 10 and 18 draws per week, with roughly 70&ndash;80% of those being score draws. Weeks with fewer than 8 draws are considered low-draw weeks, while anything above 20 is unusually high.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>How do I use past pool results to make predictions?</summary>
+        <div class="faq-answer">
+          Many pool players study recent form, head-to-head records, and historical draw patterns for specific fixtures to inform their selections. Our <a href="{% url 'pool:predictions' %}">pool predictions page</a> publishes our weekly picks, and our <a href="/archive/">archive</a> lets you review past weeks to spot patterns. Remember &mdash; no prediction method is guaranteed, so always play responsibly.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Can I check results from previous weeks?</summary>
+        <div class="faq-answer">
+          Yes. Use the week selector at the top of the results table to browse any week from the current season, or visit our archive page for older seasons.
+        </div>
+      </details>
     </section>
 
     <!-- ── LATEST BLOG POSTS ── -->
@@ -225,6 +323,95 @@
     {% endif %}
 
   {% endif %}
+
+  <!-- ── STRUCTURED DATA: FAQ SCHEMA ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a pool draw?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A pool draw is a football match that ends in a tie — either a score draw (both teams score, like 1-1 or 2-2) or a scoreless draw (0-0). In UK football pools, players attempt to predict which matches on the weekly coupon will end in draws, and correctly identifying enough of them wins the pool."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between a score draw and a scoreless draw?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A score draw is any drawn match where both teams score — 1-1, 2-2, 3-3, and so on. A scoreless draw is specifically 0-0. Most traditional UK pools only pay out on score draws, which is why our results page lists them separately."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When are pool results released each week?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pool results are released every Saturday evening after the final matches on the coupon finish. At PoolDrawResult, we update the page live as results come in, so you can check progress throughout the day."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What do EKO and LKO mean on the pool coupon?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "EKO stands for Early Kick-Off and LKO stands for Late Kick-Off. These are matches that kick off outside the standard Saturday 3pm window — typically Friday evening, Saturday lunchtime, or Saturday evening games. They're marked separately because they often affect how bookmakers and pool operators time the coupon."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many draws usually happen in a week?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A typical UK pool coupon produces between 10 and 18 draws per week, with roughly 70-80% of those being score draws. Weeks with fewer than 8 draws are considered low-draw weeks, while anything above 20 is unusually high."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I use past pool results to make predictions?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Many pool players study recent form, head-to-head records, and historical draw patterns for specific fixtures to inform their selections. Our pool predictions page publishes our weekly picks, and our archive lets you review past weeks to spot patterns. No prediction method is guaranteed, so always play responsibly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I check results from previous weeks?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Use the week selector at the top of the results table to browse any week from the current season, or visit our archive page for older seasons."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ── STRUCTURED DATA: ORGANIZATION SCHEMA ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "PoolDrawResult",
+    "url": "https://pooldrawresult.com",
+    "logo": "https://pooldrawresult.com/static/images/pdrlogo.png",
+    "description": "PoolDrawResult publishes weekly UK football pool draw results, fixtures, and predictions every Saturday, covering the Premier League, Championship, League One, League Two, and Scottish Premiership.",
+    "email": "pdresult@gmail.com",
+    "telephone": "+234-810-409-4348",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lagos",
+      "addressCountry": "NG"
+    },
+    "sameAs": [
+      "https://surecodes24.com",
+      "https://betcodes24.com"
+    ]
+  }
+  </script>
 
 {% endblock %}
 
