@@ -15,11 +15,11 @@
       <h1 class="hero-title">Pool Draw <span>Fixtures & Results</span></h1>
       <p class="hero-sub">Latest UK football pool results — score draws, scoreless draws, and full fixtures from the Premier League, Championship, League One, League Two, and Scottish Premiership, updated every Saturday.</p>
       <div class="hero-buttons">
-        <a href="https://surecodes24.com" target="_blank" rel="noopener" class="hero-btn hero-btn-outline">
-          SureCodes24
+        <a href="{% url 'pool:fixtures' %}" target="_blank" rel="noopener" class="hero-btn hero-btn-outline">
+          Pool Draw Fixtures
         </a>
-        <a href="https://betcodes24.com" target="_blank" rel="noopener" class="hero-btn hero-btn-outline">
-          BetCodes24
+        <a href="{% url 'pool:archive' %}" target="_blank" rel="noopener" class="hero-btn hero-btn-outline">
+          Pool Draw Archive
         </a>
         <a href="/login/" class="hero-btn hero-btn-vip">
           <i class="bi bi-star-fill me-1"></i> Join VIP
