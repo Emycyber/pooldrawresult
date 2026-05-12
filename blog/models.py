@@ -77,3 +77,22 @@ class BlogPage(Page):
     parent_page_types = ['blog.BlogIndexPage']  # ← can only live under BlogIndexPage
     subpage_types = []                           # ← nothing can be created under a blog post
     template = "blog/blog_page.html"
+    
+    
+class BlogComment(models.Model):
+    page = models.ForeignKey(
+        'BlogPage',
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_approved = models.BooleanField(default=False)  # ← you approve before it shows
+
+    class Meta:
+        ordering = ['created_at']
+
+    def __str__(self):
+        return f"{self.name} on {self.page.title}"

@@ -96,6 +96,52 @@
         </a>
       </div>
 
+
+      <!-- Comments Section -->
+<div class="mt-5 p-4 rounded" style="background:#fff; color:#111;">
+  <h3 style="font-family:var(--font-head); font-size:20px; margin-bottom:20px;">
+    Comments ({{ page.comments.filter.count }})
+  </h3>
+
+  <!-- Existing comments -->
+  {% for comment in page.comments.all %}
+    {% if comment.is_approved %}
+      <div class="mb-4 pb-4" style="border-bottom:1px solid #eee;">
+        <div class="d-flex justify-content-between mb-1">
+          <strong style="font-family:var(--font-head);">{{ comment.name }}</strong>
+          <span style="font-size:12px; color:#888;">{{ comment.created_at|date:"d M Y" }}</span>
+        </div>
+        <p style="font-size:14px; margin:0;">{{ comment.body }}</p>
+      </div>
+    {% endif %}
+  {% empty %}
+    <p style="color:#888; font-size:14px;">No comments yet. Be the first to comment.</p>
+  {% endfor %}
+
+  <!-- Comment form -->
+  <h4 style="font-family:var(--font-head); font-size:16px; margin-top:24px; margin-bottom:16px;">
+    Leave a Comment
+  </h4>
+  <form method="post" action="/blog/comment/{{ page.id }}/">
+    {% csrf_token %}
+    <div class="mb-3">
+      <input type="text" name="name" class="form-control" placeholder="Your name" required>
+    </div>
+    <div class="mb-3">
+      <input type="email" name="email" class="form-control" placeholder="Your email (not published)" required>
+    </div>
+    <div class="mb-3">
+      <textarea name="body" class="form-control" rows="4" placeholder="Write your comment..." required></textarea>
+    </div>
+    <button type="submit" class="btn btn-sm" style="background:var(--green); color:#000; font-family:var(--font-head);">
+      Post Comment
+    </button>
+  </form>
+  <p class="mt-2" style="font-size:12px; color:#888;">
+    Comments are reviewed before being published.
+  </p>
+</div>
+
     </div>
   </div>
 

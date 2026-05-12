@@ -29,6 +29,8 @@ urlpatterns = [
 
     # Sitemap
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
+    
+    path('blog/', include('blog.urls')),
 
     # Wagtail pages (Contact, About, Disclaimer etc.) — must be last
     path('', include(wagtail_urls)),
